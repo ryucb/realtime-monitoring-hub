@@ -1,0 +1,22 @@
+# 환경 변수 (비밀번호·API 키)
+.env
+
+# Java / Gradle / Maven
+build/
+out/
+target/
+.gradle/
+*.class
+*.log
+
+# Node / Vue
+node_modules/
+dist/
+npm-debug.log*
+
+# IDE
+.idea/
+*.iml
+.vscode/
+.DS_Store
+Thumbs.db
