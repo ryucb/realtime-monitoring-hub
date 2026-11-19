@@ -1,0 +1,41 @@
+plugins {
+    id 'java'
+}
+
+group = 'io.github.ryucb'
+version = '0.1.0'
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(21)
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = 'UTF-8'
+}
+
+// 콘솔에 한글이 깨지지 않도록 출력 인코딩을 UTF-8로 고정
+tasks.withType(JavaExec).configureEach {
+    jvmArgs '-Dstdout.encoding=UTF-8', '-Dstderr.encoding=UTF-8'
+}
+
+// 가상 장비 실행: ./gradlew simulator --args="15 15020 100"
+tasks.register('simulator', JavaExec) {
+    group = 'hub'
+    description = '가상 Modbus 장비를 띄운다'
+    classpath = sourceSets.main.runtimeClasspath
+    mainClass = 'io.github.ryucb.hub.simulator.DeviceSimulatorApp'
+}
+
+// 폴링 벤치마크: ./gradlew benchmark --args="100 5 1,5,15,30,50"
+tasks.register('benchmark', JavaExec) {
+    group = 'hub'
+    description = '장비 수별 폴링 한 바퀴 시간을 측정한다'
+    classpath = sourceSets.main.runtimeClasspath
+    mainClass = 'io.github.ryucb.hub.bench.PollingBenchmark'
+}

@@ -33,7 +33,7 @@ Java 21, Spring Boot, Kafka, WebSocket(STOMP), Vue, MySQL, Docker Compose
 
 | 주차 | 내용 | 상태 |
 | --- | --- | --- |
-| 1주 | Docker 환경, Modbus 시뮬레이터, 단일 스레드 폴링 재현·측정 | ⏳ |
+| 1주 | Docker 환경, Modbus 시뮬레이터, 단일 스레드 폴링 재현·측정 | 🔨 진행 중 |
 | 2주 | 병렬 폴링 전환(스레드 풀 / 가상 스레드), 장애 격리, 벤치마크 | ⏳ |
 | 3주 | Kafka 토픽 설계, WebSocket 푸시, Vue 대시보드 | ⏳ |
 | 4주 | 공공 API 소스, 알림 규칙, 텔레그램 봇 | ⏳ |
@@ -42,14 +42,35 @@ Java 21, Spring Boot, Kafka, WebSocket(STOMP), Vue, MySQL, Docker Compose
 
 ## 실행 방법
 
+Java 21이 필요합니다. Gradle은 `gradlew`가 처음 실행할 때 자동으로 내려받습니다(Windows는 `gradlew.bat`).
+
 ```bash
+# 가상 Modbus 장비 15대 띄우기 (포트 15020~15034, 응답 지연 100ms)
+./gradlew simulator --args="15 15020 100"
+
+# 장비 수별 폴링 한 바퀴 시간 측정 (응답 지연 100ms, 5바퀴, 장비 1·5·15·30·50대)
+./gradlew benchmark --args="100 5 1,5,15,30,50"
+
+# Kafka, MySQL (3주차부터 사용)
 cp .env.example .env
-docker compose up -d   # Kafka, MySQL
+docker compose up -d
 ```
 
 ## 측정 결과
 
-1~2주차 측정 후 채웁니다.
+### 1주차: 단일 스레드 순차 폴링 (승일 구조 재현)
+
+장비 응답 지연 100ms, 3바퀴 평균. 원본 값은 [results/](./results) 폴더에 있습니다.
+
+| 장비 수 | 한 바퀴 평균 |
+| --- | --- |
+| 1대 | 101ms |
+| 5대 | 506ms |
+| 15대 | 1,519ms |
+| 30대 | 3,028ms |
+| 50대 | 5,044ms |
+
+한 바퀴 시간이 **장비 수 × 장비 응답 시간**으로 그대로 늘어납니다. 스레드 하나가 한 장비의 응답을 기다리는 동안 나머지 장비는 아무것도 하지 못하기 때문입니다. 실제 현장 장비는 RS-485 직렬 통신과 무선 변환기를 거치면서 응답이 이보다 느려 지연이 더 커집니다. 2주차에 병렬 폴링으로 바꾼 뒤 같은 조건에서 비교합니다.
 
 ## 개발 기록
 

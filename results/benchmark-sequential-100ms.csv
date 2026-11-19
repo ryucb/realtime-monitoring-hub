@@ -1,0 +1,6 @@
+poller,devices,device_delay_ms,avg_cycle_ms,max_cycle_ms,readings_per_cycle
+sequential,1,100,101,101,1
+sequential,5,100,506,509,5
+sequential,15,100,1519,1521,15
+sequential,30,100,3028,3031,30
+sequential,50,100,5044,5050,50
