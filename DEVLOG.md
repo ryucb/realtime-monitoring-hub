@@ -12,6 +12,21 @@
 
 ---
 
+## 2026-11-19 (4)
+- 한 일: 포맷한 PC에 개발 환경 세팅 (Git, JDK 21, STS). 패키지 이름을 `com.ryucb.hub`로 변경. 1주차 테스트 5개 모두 통과
+  - 단위 테스트 3/3 통과
+  - 수집 서버: 장비 15대 한 바퀴 약 1.5초 (`/api/status`)
+  - 장비를 끄면 succeeded 0, 다시 켜면 서버 재시작 없이 15로 회복
+  - 벤치마크: 한 바퀴 시간이 장비 수 × 응답 시간에 비례 (승일 문제 재현 확인)
+  - application.yml에서 장비 수만 바꿔 30대 → 약 3초
+- 막힌 점
+  - STS에서 JUnit 실행 시 `Cannot find class junit.framework.TestCase` → STS가 Gradle 동기화에 실패해 Java 프로젝트로 인식하지 못한 상태였음. Preferences → Gradle → Java home에 JDK 21 지정 후 다시 Import해서 해결
+  - Gradle로 실행하면 한글 출력이 깨짐 (`媛???`, `占쏙옙`, `����`) → `chcp 65001`, PowerShell 출력 인코딩, `GRADLE_OPTS` 모두 효과 없음. `java`로 직접 실행하면 정상이라 Gradle이 출력을 시스템 인코딩(MS949)으로 다시 변환하는 것이 원인으로 판단. Windows "UTF-8 세계 언어 지원(베타)" 설정으로 해결
+  - 패키지 경로가 깊어 Claude가 PC 파일에 접근하지 못함 → `io.github.ryucb.hub` → `com.ryucb.hub`로 한 단계 줄임
+- 발견: 장비가 꺼져도 `/api/readings`에 마지막 값이 그대로 남아 정상처럼 보임. 모니터링 화면이라면 연결 끊김을 표시해야 함
+- AI 활용: 한글 깨짐 원인을 Claude와 단계별 진단 명령으로 좁혀 감 (콘솔 → Java → Gradle 순으로 하나씩 배제)
+- 다음 할 일: 장비별 연결 상태(online, 마지막 성공 시각, 오류) 표시. 2주차 병렬 폴링
+
 ## 2026-11-19 (3)
 - 한 일: 프레임워크를 Spring Boot(4.1)로 결정. 수집 서버 뼈대 작성 — 설정(application.yml), 1초 주기 스케줄 폴링, 최신 값·상태 API(/api/readings, /api/status), 순차 폴링 테스트 3개
 - 개선: 장비 연결을 처음 읽을 때 접속하고 오류가 나면 다음 바퀴에 다시 접속하도록 변경 (장비가 꺼졌다 켜져도 서버 재시작 불필요)
