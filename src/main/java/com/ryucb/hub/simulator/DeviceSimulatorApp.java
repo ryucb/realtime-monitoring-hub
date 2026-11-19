@@ -1,4 +1,4 @@
-package io.github.ryucb.hub.simulator;
+package com.ryucb.hub.simulator;
 
 import java.util.ArrayList;
 import java.util.List;

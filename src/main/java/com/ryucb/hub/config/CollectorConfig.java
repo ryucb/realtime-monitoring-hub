@@ -1,8 +1,8 @@
-package io.github.ryucb.hub.config;
+package com.ryucb.hub.config;
 
-import io.github.ryucb.hub.collector.DeviceConnection;
-import io.github.ryucb.hub.collector.Poller;
-import io.github.ryucb.hub.collector.SequentialPoller;
+import com.ryucb.hub.collector.DeviceConnection;
+import com.ryucb.hub.collector.Poller;
+import com.ryucb.hub.collector.SequentialPoller;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 

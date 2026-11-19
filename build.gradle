@@ -4,7 +4,7 @@ plugins {
     id 'io.spring.dependency-management' version '1.1.7'
 }
 
-group = 'io.github.ryucb'
+group = 'com.ryucb'
 version = '0.1.0'
 
 java {
@@ -39,7 +39,7 @@ tasks.named('test') {
 
 // 실행 파일(jar)의 시작점: 수집 서버
 springBoot {
-    mainClass = 'io.github.ryucb.hub.HubApplication'
+    mainClass = 'com.ryucb.hub.HubApplication'
 }
 
 // 가상 장비 실행: gradlew simulator --args="15 15020 100"
@@ -47,7 +47,7 @@ tasks.register('simulator', JavaExec) {
     group = 'hub'
     description = '가상 Modbus 장비를 띄운다'
     classpath = sourceSets.main.runtimeClasspath
-    mainClass = 'io.github.ryucb.hub.simulator.DeviceSimulatorApp'
+    mainClass = 'com.ryucb.hub.simulator.DeviceSimulatorApp'
 }
 
 // 폴링 벤치마크: gradlew benchmark --args="100 5 1,5,15,30,50"
@@ -55,5 +55,5 @@ tasks.register('benchmark', JavaExec) {
     group = 'hub'
     description = '장비 수별 폴링 한 바퀴 시간을 측정한다'
     classpath = sourceSets.main.runtimeClasspath
-    mainClass = 'io.github.ryucb.hub.bench.PollingBenchmark'
+    mainClass = 'com.ryucb.hub.bench.PollingBenchmark'
 }

@@ -1,4 +1,4 @@
-package io.github.ryucb.hub.collector;
+package com.ryucb.hub.collector;
 
 /**
  * 장비 한 대에서 한 번 읽은 값.

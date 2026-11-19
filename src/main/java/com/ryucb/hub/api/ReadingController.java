@@ -1,8 +1,8 @@
-package io.github.ryucb.hub.api;
+package com.ryucb.hub.api;
 
-import io.github.ryucb.hub.collector.PollingService;
-import io.github.ryucb.hub.collector.PollingService.CycleStats;
-import io.github.ryucb.hub.collector.Reading;
+import com.ryucb.hub.collector.PollingService;
+import com.ryucb.hub.collector.PollingService.CycleStats;
+import com.ryucb.hub.collector.Reading;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;

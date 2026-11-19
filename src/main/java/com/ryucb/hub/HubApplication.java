@@ -1,4 +1,4 @@
-package io.github.ryucb.hub;
+package com.ryucb.hub;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

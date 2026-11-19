@@ -1,7 +1,7 @@
-package io.github.ryucb.hub.simulator;
+package com.ryucb.hub.simulator;
 
-import io.github.ryucb.hub.modbus.ModbusTcp;
-import io.github.ryucb.hub.modbus.ModbusTcp.ReadRequest;
+import com.ryucb.hub.modbus.ModbusTcp;
+import com.ryucb.hub.modbus.ModbusTcp.ReadRequest;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;

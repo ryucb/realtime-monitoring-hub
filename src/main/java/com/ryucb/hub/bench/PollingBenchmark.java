@@ -1,10 +1,10 @@
-package io.github.ryucb.hub.bench;
+package com.ryucb.hub.bench;
 
-import io.github.ryucb.hub.collector.DeviceConnection;
-import io.github.ryucb.hub.collector.Poller;
-import io.github.ryucb.hub.collector.Reading;
-import io.github.ryucb.hub.collector.SequentialPoller;
-import io.github.ryucb.hub.simulator.SimulatedDevice;
+import com.ryucb.hub.collector.DeviceConnection;
+import com.ryucb.hub.collector.Poller;
+import com.ryucb.hub.collector.Reading;
+import com.ryucb.hub.collector.SequentialPoller;
+import com.ryucb.hub.simulator.SimulatedDevice;
 
 import java.io.IOException;
 import java.io.PrintWriter;

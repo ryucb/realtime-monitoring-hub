@@ -1,4 +1,4 @@
-package io.github.ryucb.hub.collector;
+package com.ryucb.hub.collector;
 
 import java.util.List;
 

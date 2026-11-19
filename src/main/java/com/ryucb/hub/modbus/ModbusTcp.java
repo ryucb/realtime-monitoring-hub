@@ -1,4 +1,4 @@
-package io.github.ryucb.hub.modbus;
+package com.ryucb.hub.modbus;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;

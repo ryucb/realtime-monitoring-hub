@@ -1,4 +1,4 @@
-package io.github.ryucb.hub.config;
+package com.ryucb.hub.config;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 

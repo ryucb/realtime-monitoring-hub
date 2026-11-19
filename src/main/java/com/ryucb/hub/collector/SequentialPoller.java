@@ -1,6 +1,6 @@
-package io.github.ryucb.hub.collector;
+package com.ryucb.hub.collector;
 
-import io.github.ryucb.hub.simulator.SimulatedDevice;
+import com.ryucb.hub.simulator.SimulatedDevice;
 
 import java.io.IOException;
 import java.util.ArrayList;
