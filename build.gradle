@@ -1,5 +1,7 @@
 plugins {
     id 'java'
+    id 'org.springframework.boot' version '4.1.0'
+    id 'io.spring.dependency-management' version '1.1.7'
 }
 
 group = 'io.github.ryucb'
@@ -15,6 +17,13 @@ repositories {
     mavenCentral()
 }
 
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+}
+
 tasks.withType(JavaCompile).configureEach {
     options.encoding = 'UTF-8'
 }
@@ -24,7 +33,16 @@ tasks.withType(JavaExec).configureEach {
     jvmArgs '-Dstdout.encoding=UTF-8', '-Dstderr.encoding=UTF-8'
 }
 
-// 가상 장비 실행: ./gradlew simulator --args="15 15020 100"
+tasks.named('test') {
+    useJUnitPlatform()
+}
+
+// 실행 파일(jar)의 시작점: 수집 서버
+springBoot {
+    mainClass = 'io.github.ryucb.hub.HubApplication'
+}
+
+// 가상 장비 실행: gradlew simulator --args="15 15020 100"
 tasks.register('simulator', JavaExec) {
     group = 'hub'
     description = '가상 Modbus 장비를 띄운다'
@@ -32,7 +50,7 @@ tasks.register('simulator', JavaExec) {
     mainClass = 'io.github.ryucb.hub.simulator.DeviceSimulatorApp'
 }
 
-// 폴링 벤치마크: ./gradlew benchmark --args="100 5 1,5,15,30,50"
+// 폴링 벤치마크: gradlew benchmark --args="100 5 1,5,15,30,50"
 tasks.register('benchmark', JavaExec) {
     group = 'hub'
     description = '장비 수별 폴링 한 바퀴 시간을 측정한다'

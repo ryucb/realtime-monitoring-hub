@@ -1,0 +1,21 @@
+spring:
+  application:
+    name: realtime-monitoring-hub
+
+server:
+  port: 8080
+
+hub:
+  devices:
+    host: 127.0.0.1
+    base-port: 15020   # gradlew simulator 기본값과 같은 포트
+    count: 15
+  polling:
+    interval-ms: 1000  # 한 바퀴가 끝난 뒤 쉬는 시간
+    timeout-ms: 3000   # 장비 하나의 접속·응답 제한 시간
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info

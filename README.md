@@ -27,7 +27,7 @@ Modbus 장비와 공공 API를 **병렬 폴링**으로 수집하고, Kafka와 We
 
 ## 기술 스택
 
-Java 21, Spring Boot, Kafka, WebSocket(STOMP), Vue, MySQL, Docker Compose
+Java 21, Spring Boot 4.1, Kafka, WebSocket(STOMP), Vue, MySQL, Docker Compose
 
 ## 진행 계획 (6주)
 
@@ -44,9 +44,27 @@ Java 21, Spring Boot, Kafka, WebSocket(STOMP), Vue, MySQL, Docker Compose
 
 Java 21이 필요합니다. Gradle은 `gradlew`가 처음 실행할 때 자동으로 내려받습니다(Windows는 `gradlew.bat`).
 
+터미널 두 개를 엽니다.
+
 ```bash
-# 가상 Modbus 장비 15대 띄우기 (포트 15020~15034, 응답 지연 100ms)
+# 터미널 1: 가상 Modbus 장비 15대 띄우기 (포트 15020~15034, 응답 지연 100ms)
 ./gradlew simulator --args="15 15020 100"
+
+# 터미널 2: 수집 서버(Spring Boot) 실행 → 1초 간격으로 장비 15대를 폴링
+./gradlew bootRun
+```
+
+수집 서버가 뜨면 브라우저에서 확인합니다.
+
+- http://localhost:8080/api/readings : 장비별 최신 값
+- http://localhost:8080/api/status : 마지막 한 바퀴의 폴링 방식, 성공 수, 소요 시간
+- http://localhost:8080/actuator/health : 서버 상태
+
+장비 수, 포트, 폴링 주기는 `src/main/resources/application.yml`에서 바꿉니다.
+
+```bash
+# 테스트
+./gradlew test
 
 # 장비 수별 폴링 한 바퀴 시간 측정 (응답 지연 100ms, 5바퀴, 장비 1·5·15·30·50대)
 ./gradlew benchmark --args="100 5 1,5,15,30,50"

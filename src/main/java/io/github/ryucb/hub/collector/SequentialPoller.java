@@ -18,7 +18,7 @@ public final class SequentialPoller implements Poller {
     private final List<DeviceConnection> connections;
 
     public SequentialPoller(List<DeviceConnection> connections) {
-        this.connections = connections;
+        this.connections = List.copyOf(connections);
     }
 
     @Override
@@ -29,10 +29,16 @@ public final class SequentialPoller implements Poller {
                 int[] registers = connection.readRegisters(0, SimulatedDevice.REGISTER_COUNT);
                 readings.add(Reading.fromRegisters(connection.deviceId(), registers, System.currentTimeMillis()));
             } catch (IOException e) {
-                System.err.println("[순차 폴링] 장비 " + connection.deviceId() + " 읽기 실패: " + e.getMessage());
+                System.err.println("[순차 폴링] 장비 " + connection.deviceId() + "(" + connection.address()
+                        + ") 읽기 실패: " + e.getMessage());
             }
         }
         return readings;
+    }
+
+    @Override
+    public int deviceCount() {
+        return connections.size();
     }
 
     @Override
@@ -42,12 +48,6 @@ public final class SequentialPoller implements Poller {
 
     @Override
     public void close() {
-        for (DeviceConnection connection : connections) {
-            try {
-                connection.close();
-            } catch (IOException ignored) {
-                // 종료 중이라 무시
-            }
-        }
+        connections.forEach(DeviceConnection::close);
     }
 }

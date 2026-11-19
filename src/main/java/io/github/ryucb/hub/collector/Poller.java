@@ -8,6 +8,8 @@ public interface Poller extends AutoCloseable {
     /** 모든 장비를 한 번씩 읽고 결과를 돌려준다. 실패한 장비는 결과에서 빠진다. */
     List<Reading> pollOnce();
 
+    int deviceCount();
+
     String name();
 
     @Override
